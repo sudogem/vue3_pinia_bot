@@ -1,17 +1,17 @@
 <template>
   <div class="container">
     <h1>Your Cart</h1>
-    <div class="empty-cart" v-if="cart.length === 0">
+    <div class="empty-cart" v-if="cartStore.cart.length === 0">
       You have no items in your cart
     </div>
-    <ul class="cart" v-if="cart.length > 0">
-      <li class="cart-item" v-for="(product, index) in cart" :key="index">
+    <ul class="cart" v-if="cartStore.cart.length > 0">
+      <li class="cart-item" v-for="(product, index) in cartStore.cart" :key="index">
         <ProductInfo :product="product">
           <button @click="removeFromCart(product)">Remove</button>
         </ProductInfo>
       </li>
     </ul>
-    <div v-if="cart.length > 0" class="total">Total: {{ toCurrency(cartTotal) }}</div>
+    <div v-if="cartStore.cart.length > 0" class="total">Total: {{ toCurrency(cartTotal) }}</div>
   </div>
 </template>
 
@@ -24,11 +24,11 @@ const cartStore = useCartStore()
 
 // Remember this: By declaring this extra variable e.g. cart, cartTotal, we essentially broke the reactivity
 // that the pinia store was giving us.
-let cart = cartStore.cart
+// let cart = cartStore.cart
 let cartTotal = cartStore.cartTotal
 
 function removeFromCart(product) {
-  cart = cart.filter((p) => p !== product)
+  cartStore.cart = cartStore.cart.filter((p) => p !== product)
 }
 
 </script>
