@@ -36,6 +36,9 @@ import useSearch from './useSearch'
 import useFilters from './useFilters'
 import usePagination from './usePagination'
 
+import { useCartStore } from '@/stores/cart'
+const cartStore = useCartStore()
+
 const searchTerm = ref('')
 const { searchResults } = useSearch(searchTerm)
 
@@ -66,6 +69,12 @@ function getClass(category) {
 }
 
 const resultCount = computed(() => filteredResults.value.length)
+
+function addToCart(product) {
+  cartStore.cart.push({ ...product })
+  console.log('cartStore.cart.length:', cartStore.cart.length)
+}
+
 </script>
 
 <style scoped>
