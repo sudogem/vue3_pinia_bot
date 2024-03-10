@@ -18,8 +18,26 @@ import { useCartStore } from '@/stores/cart.js'
 const cartStore = useCartStore()
 
 function addToCart(product) {
-  cartStore.cart.push({ ...product })
-  console.log('cartStore.cart.length:', cartStore.cart.length)
+  // using approach #1: using push() simple approach
+  // cartStore.cart.push({ ...product })
+  // console.log('cartStore.cart.length:', cartStore.cart.length)
+  
+  // using approach #2: using spread
+  // const newCart = [...cartStore.cart, product]
+  // cartStore.cart = newCart
+  
+  // using approach #3: $patch({}) pass by object - use to modify multiple state properties on the store
+  // const newCart = [...cartStore.cart, product]
+  // cartStore.$patch({
+  //   cart: newCart,
+  //   anotherProperties: 'foobar',
+  // })
+
+  // using approach #4: $patch((state)) pass by function 
+  cartStore.$patch((state) => {
+    state.cart.push({ ...product })
+    state.anotherProperties = 'foobar'
+  })
 }
 </script>
 
