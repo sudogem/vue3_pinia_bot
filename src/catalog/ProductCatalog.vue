@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="products">
-      <li class="product-item" v-for="(product, index) in products" :key="index">
+      <li class="product-item" v-for="(product, index) in productStore.products" :key="index">
         <ProductInfo :product="product">
           <button class="cta" @click="addToCart(product)">Buy</button>
         </ProductInfo>
@@ -10,12 +10,18 @@
   </div>
 </template>
 
+<!-- Composition API -->
 <script setup>
 import ProductInfo from './product-info/ProductInfo.vue'
-import products from './product-data.js'
+// import products from './product-data.js'
 
+import { useProductStore } from '@/stores/product.js' // load data by using synchronous action
 import { useCartStore } from '@/stores/cart.js'
+
 const cartStore = useCartStore()
+const productStore = useProductStore()
+
+productStore.getProducts()
 
 function addToCart(product) {
   // using approach #1: using push() simple approach
