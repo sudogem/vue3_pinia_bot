@@ -5,6 +5,11 @@ module.exports = {
     'plugin:vue/vue3-essential',
     'eslint:recommended',
   ],
+  env: {
+    browser: true,
+    node: true,
+    es6: true,
+  },
   rules: {
     'linebreak-style': 0,
     'operator-linebreak': 0,

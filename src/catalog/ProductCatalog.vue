@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>Catalog</h1>
+    <span>Total Products: {{ productStore.products.length }} </span>
     <ul class="products">
       <li class="product-item" v-for="(product, index) in productStore.products" :key="index">
         <ProductInfo :product="product">
