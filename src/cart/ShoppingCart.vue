@@ -21,7 +21,7 @@ import ProductInfo from '@/catalog/product-info/ProductInfo.vue'
 
 import { storeToRefs } from 'pinia'
 import { useCartStore } from '@/stores/cart'
-// const cartStore = useCartStore()
+const cartStore = useCartStore()
 
 // Remember this: By declaring this extra variable e.g. cart, cartTotal, we essentially broke the reactivity
 // that the pinia store was giving us.
@@ -31,11 +31,8 @@ import { useCartStore } from '@/stores/cart'
 // storeToRefs - destructure the cart store while maintaining reactivity.
 // Only use storeToRefs for destructuring state, getters or calculated state.
 // But actions you can actually destructure directly from the store using plain js destructure
-let { cart, cartTotal } = storeToRefs(useCartStore()) // this 2 variables are actually refs
-
-function removeFromCart(product) {
-  cart.value = cart.value.filter((p) => p !== product)
-}
+let { cart, cartTotal } = storeToRefs(cartStore) // this 2 variables are actually refs
+const { removeFromCart } = cartStore
 
 </script>
 
