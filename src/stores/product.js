@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 
-import productData from '@/catalog/product-data'
+// import productData from '@/catalog/product-data'
 
 export const useProductStore = defineStore('products', () => {
   const products = ref([])
@@ -16,8 +16,11 @@ export const useProductStore = defineStore('products', () => {
 async function getProducts() {
     // fetch('http://localhost:8081/api/products') // will return CORS error
     // console.log('FRONTEND_BASEURL:', import.meta.env.VITE_FRONTEND_BASEURL)
+    console.log('call getProducts() API')
     const response = await fetch('/api/products')
-    products.value = await response.json()
+    const returnedProducts = await response.json()
+    products.value = returnedProducts
+    return returnedProducts
   }
 
   return {
