@@ -13,6 +13,8 @@ export default function useSearch(searchTerm) {
         (product) => product.name.toLowerCase().includes(lowerTerm),
       )
     }
+    console.log('aa searchTerm:', searchTerm.value)
+
     return [...searchResults]
   })
 

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <input placeholder="Enter Search Term" @input="searchTerm = $event.target.value" />
+      <input placeholder="Enter Search Term" v-model="term" @input="searchTerm = $event.target.value" />
     </div>
     <div class="filters">
       <div class="filters-text">Filters:</div>
@@ -10,6 +10,7 @@
       <div><button @click="filter('Torsos')" :class="getClass('Torsos')">Torsos</button></div>
       <div><button @click="filter('Bases')" :class="getClass('Bases')">Bases</button></div>
       <div><button @click="clearFilters()">Clear Filters</button></div>
+      <div><button @click="clearSearchbox()">Clear text</button></div>
     </div>
     <div>
       <ul class="products">
@@ -40,6 +41,7 @@ import { useCartStore } from '@/stores/cart'
 const cartStore = useCartStore()
 
 const searchTerm = ref('')
+const term = ref('')
 const { searchResults } = useSearch(searchTerm)
 
 const {
@@ -60,6 +62,11 @@ const {
 function filter(category) {
   const filtersObj = { category }
   applyFilters(filtersObj)
+}
+
+function clearSearchbox() {
+  term.value = ''
+  searchTerm.value = ''
 }
 
 function getClass(category) {
