@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { useProductStore } from "./product"
+import { useProductStore } from "./product-options"
 
 
 export const useCartStore = defineStore('cart', {
@@ -25,7 +25,18 @@ export const useCartStore = defineStore('cart', {
     // In order to access the getter cart functions is to define the cartTotal as a
     //   regular function unlike the cart function it is define as a property not a function.
     cartTotal() {
-      return this.cart.value.reduce((prev, cur) => prev += cur.price, 0)
+      return this.cart.reduce((prev, cur) => prev += cur.price, 0)
+    },
+  },
+  actions: {
+    // Note: use this keyword to access your store's state e.g. productIds inside an action
+    // No need to call .value e.g. productIds.value
+    addToCart(product) {
+      this.productIds.push(product.id)
+    },
+    removeFromCart(product) {
+      const itemIndex = this.productIds.findIndex(id => id === product.id)
+      this.productIds.splice(itemIndex, 1)
     },
   },
 })

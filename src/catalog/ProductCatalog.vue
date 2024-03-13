@@ -16,8 +16,8 @@
 <script setup>
 import ProductInfo from './product-info/ProductInfo.vue'
 
-import { useProductStore } from '@/stores/product.js' // load data by using synchronous action
-import { useCartStore } from '@/stores/cart.js'
+import { useProductStore } from '@/stores/product-options.js' // load data by using synchronous action
+import { useCartStore } from '@/stores/cart-options.js'
 
 const cartStore = useCartStore()
 const productStore = useProductStore()

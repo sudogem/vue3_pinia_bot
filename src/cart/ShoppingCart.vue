@@ -20,7 +20,7 @@ import { toCurrency } from '@/shared/formatters'
 import ProductInfo from '@/catalog/product-info/ProductInfo.vue'
 
 import { storeToRefs } from 'pinia'
-import { useCartStore } from '@/stores/cart'
+import { useCartStore } from '@/stores/cart-options'
 const cartStore = useCartStore()
 
 // Remember this: By declaring this extra variable e.g. cart, cartTotal, we essentially broke the reactivity
