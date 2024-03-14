@@ -29,8 +29,9 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue'
+<!-- Options API -->
+<script>
+import { ref } from 'vue'
 import ProductInfo from '@/catalog/product-info/ProductInfo.vue'
 
 import useSearch from './useSearch'
@@ -38,50 +39,72 @@ import useFilters from './useFilters'
 import usePagination from './usePagination'
 
 import { useCartStore } from '@/stores/cart-options'
-const cartStore = useCartStore()
 
-const searchTerm = ref('')
-const term = ref('')
-const { searchResults } = useSearch(searchTerm)
+export default {
+  components: {
+    ProductInfo,
+  },
+  setup() {
+    const cartStore = useCartStore()
+    const searchTerm = ref('')
+    const term = ref('')
+    const { searchResults } = useSearch(searchTerm)
 
-const {
-  filters,
-  applyFilters,
-  clearFilters,
-  filteredResults,
-} = useFilters(searchResults)
+    const {
+      filters,
+      applyFilters,
+      clearFilters,
+      filteredResults,
+    } = useFilters(searchResults)
 
-const {
-  nextPage,
-  prevPage,
-  currentStartIndex,
-  currentEndIndex,
-  pagedResults,
-} = usePagination(filteredResults)
+    const {
+      nextPage,
+      prevPage,
+      currentStartIndex,
+      currentEndIndex,
+      pagedResults,
+    } = usePagination(filteredResults)
 
-function filter(category) {
-  const filtersObj = { category }
-  applyFilters(filtersObj)
+    return {
+      cartStore,
+      searchTerm,
+      term,
+      searchResults,
+      filters,
+      filteredResults,
+      applyFilters,
+      clearFilters,
+      pagedResults,
+      nextPage,
+      prevPage,
+      currentStartIndex,
+      currentEndIndex,
+    }
+  },
+  computed: {
+    pagedResults1() {
+      return this.pagedResults
+    },
+    resultCount() {
+      return this.filteredResults.length
+    },
+  },
+  methods: {
+    filter(category) {
+      const filtersObj = { category }
+      this.applyFilters(filtersObj)
+    },
+    getClass(category) {
+      return this.filters.some(f => f['category'] === category)
+          ? 'cta' : ''
+    },
+    addToCart(product) {
+      // this.cartStore.cart.push({ ...product })
+      this.cartStore.addToCart(product)
+      console.log('cartStore.cart.length:', this.cartStore.cart.length)
+    },
+  },
 }
-
-function clearSearchbox() {
-  term.value = ''
-  searchTerm.value = ''
-}
-
-function getClass(category) {
-  return filters.value.some(f => f['category'] === category)
-    ? 'cta'
-    : ''
-}
-
-const resultCount = computed(() => filteredResults.value.length)
-
-function addToCart(product) {
-  cartStore.cart.push({ ...product })
-  console.log('cartStore.cart.length:', cartStore.cart.length)
-}
-
 </script>
 
 <style scoped>

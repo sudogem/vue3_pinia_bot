@@ -1,6 +1,6 @@
 import { computed, onMounted } from 'vue'
 // import products from '@/catalog/product-data'
-import { useProductStore } from '@/stores/product'
+import { useProductStore } from '@/stores/product-options'
 
 export default function useSearch(searchTerm) {
   const productStore = useProductStore()
